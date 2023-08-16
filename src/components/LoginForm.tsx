@@ -1,17 +1,14 @@
 import { Form, Input, Button } from "antd";
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import { rules } from "../utils/rules";
 import { useDispatch } from "react-redux";
 import { AuthActionCreators } from "../store/reducers/auth/action-creators";
 
 const LoginForm: FC = () => {
-  const dispatch = useDispatch();
+  const dispatch: any = useDispatch();
   const submit = () => {
-    // dispatch(AuthActionCreators.login('','123'));
+    dispatch(AuthActionCreators.login("", ""));
   };
-  useEffect(() => {
-    console.log(dispatch(AuthActionCreators.setIsLoading(true)));
-  }, []);
   return (
     <Form onFinish={submit}>
       <Form.Item

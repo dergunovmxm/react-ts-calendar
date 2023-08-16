@@ -18,24 +18,24 @@ export const AuthActionCreators = {
     type: AuthActionsEnum.SET_AUTH,
     payload: auth,
   }),
-  setError: (error: string): SetErrorAction => ({
-    type: AuthActionsEnum.SET_ERROR,
-    payload: error,
-  }),
-  setIsLoading: (isLoading: boolean): SetIsLoadingAction => ({
+  setIsLoading: (payload: boolean): SetIsLoadingAction => ({
     type: AuthActionsEnum.SET_IS_LOADING,
-    payload: isLoading,
+    payload,
   }),
-  login: (login: string, password: string) => async (dispatch: AppDispatch)  => {
+  setError: (payload: string): SetErrorAction => ({
+    type: AuthActionsEnum.SET_ERROR,
+    payload,
+  }),
+  login: (login: string, password: string) => async (dispatch: AppDispatch) => {
     try {
-      dispatch(AuthActionCreators.setIsLoading(true));
-      const mockUsers = await axios.get<IUser[]>('./users.json')
-      console.log(mockUsers)
+        dispatch(AuthActionCreators.setIsLoading(true));
+        const mockUsers = await axios.get('./users.json')
+        console.log(mockUsers)
     } catch (error) {
-        dispatch(AuthActionCreators.setError('Произошла ошибка при логине!'))
+        dispatch(AuthActionCreators.setError('Произошла ошибка при логине!!'))
     }
   },
-  logout: () => async () => (dispatch: AppDispatch) => {
+  logout: () => async (dispatch: AppDispatch) => {
     try {
     } catch (error) {}
   },
