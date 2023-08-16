@@ -3,16 +3,13 @@ import { Layout, Menu, Row } from "antd";
 import { useNavigate } from "react-router-dom";
 import { RouteNames } from "../router";
 import { useTypedSelector } from "../hooks/useTypedSelector";
-import { useDispatch } from "react-redux";
-import { AuthActionCreators } from "../store/reducers/auth/action-creators";
+import { useActions } from "../hooks/useActions";
 
 const Navbar: FC = () => {
   const router = useNavigate();
-  const dispatch: any = useDispatch();
+  const {logout} = useActions()
   const { isAuth, user  } = useTypedSelector((state) => state.auth);
-  const logout = () => {
-    dispatch(AuthActionCreators.logout());
-  };
+
   return (
     <Layout.Header>
       <Row justify="end">

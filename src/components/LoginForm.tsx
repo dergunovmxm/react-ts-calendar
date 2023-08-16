@@ -1,17 +1,16 @@
 import { Form, Input, Button } from "antd";
 import React, { FC } from "react";
 import { rules } from "../utils/rules";
-import { useDispatch } from "react-redux";
-import { AuthActionCreators } from "../store/reducers/auth/action-creators";
 import { useTypedSelector } from "../hooks/useTypedSelector";
+import { useActions } from "../hooks/useActions";
 
 const LoginForm: FC = () => {
-  const dispatch: any = useDispatch();
-  const [login, setLogin] = React.useState("");
+  const [loginEnter, setLogin] = React.useState("");
   const [password, setPassword] = React.useState("");
   const { error, isLoading } = useTypedSelector((state) => state.auth);
+  const {login} = useActions()
   const submit = () => {
-    dispatch(AuthActionCreators.login(login, password));
+    login(loginEnter, password)
   };
   return (
     <Form onFinish={submit}>
@@ -22,7 +21,7 @@ const LoginForm: FC = () => {
         rules={[rules.required("Введите логин!")]}
       >
         <Input
-          value={login}
+          value={loginEnter}
           onChange={(event) => setLogin(event.target.value)}
         />
       </Form.Item>
