@@ -28,15 +28,30 @@ export const AuthActionCreators = {
   }),
   login: (login: string, password: string) => async (dispatch: AppDispatch) => {
     try {
-        dispatch(AuthActionCreators.setIsLoading(true));
-        const mockUsers = await axios.get('./users.json')
-        console.log(mockUsers)
+      dispatch(AuthActionCreators.setIsLoading(true));
+      setTimeout(async () => {
+        const response = await axios.get<IUser[]>("./users.json");
+        const mockUser = response.data.find(
+          (user) => user.login === login && user.password === password
+        );
+        if (mockUser) {
+          localStorage.setItem("auth", "true");
+          localStorage.setItem("auth", mockUser.login);
+          dispatch(AuthActionCreators.setIsAuth(true));
+          dispatch(AuthActionCreators.setUser(mockUser));
+        } else {
+          dispatch(AuthActionCreators.setError("Пользователь не найден!"));
+        }
+        dispatch(AuthActionCreators.setIsLoading(false));
+      }, 1000);
     } catch (error) {
-        dispatch(AuthActionCreators.setError('Произошла ошибка при логине!!'))
+      dispatch(AuthActionCreators.setError("Произошла ошибка при логине!!"));
     }
   },
   logout: () => async (dispatch: AppDispatch) => {
-    try {
-    } catch (error) {}
+    localStorage.removeItem("auth");
+    localStorage.removeItem("login");
+    dispatch(AuthActionCreators.setIsAuth(false));
+    dispatch(AuthActionCreators.setUser({} as IUser));
   },
 };
