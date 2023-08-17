@@ -1,4 +1,4 @@
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Row, Select } from "antd";
 import React, { FC } from "react";
 import { rules } from "../utils/rules";
 import { useTypedSelector } from "../hooks/useTypedSelector";
@@ -8,9 +8,9 @@ const LoginForm: FC = () => {
   const [loginEnter, setLogin] = React.useState("");
   const [password, setPassword] = React.useState("");
   const { error, isLoading } = useTypedSelector((state) => state.auth);
-  const {login} = useActions()
+  const { login } = useActions();
   const submit = () => {
-    login(loginEnter, password)
+    login(loginEnter, password);
   };
   return (
     <Form onFinish={submit}>
@@ -26,6 +26,10 @@ const LoginForm: FC = () => {
         />
       </Form.Item>
 
+      <Form.Item>
+        <Select></Select>
+      </Form.Item>
+
       <Form.Item
         label="Пароль"
         name="password"
@@ -34,15 +38,17 @@ const LoginForm: FC = () => {
         <Input
           value={password}
           onChange={(event) => setPassword(event.target.value)}
-          type={'password'}
+          type={"password"}
         />
       </Form.Item>
 
-      <Form.Item>
-        <Button type="primary" htmlType="submit" loading={isLoading}>
-          Войти
-        </Button>
-      </Form.Item>
+      <Row justify="end">
+        <Form.Item>
+          <Button type="primary" htmlType="submit" loading={isLoading}>
+            Войти
+          </Button>
+        </Form.Item>
+      </Row>
     </Form>
   );
 };
