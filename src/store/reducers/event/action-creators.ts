@@ -17,7 +17,8 @@ export const EventActionCreators = {
 
   fetchGuests: () => async (dispatch: AppDispatch) => {
     try {
-      const guest = await axios.get("./users.json");
+      const guests = await axios.get("./users.json")
+      .then()
     } catch (error) {}
   },
 };
